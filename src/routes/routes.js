@@ -1,10 +1,10 @@
 const { ping } = require('./ping')
-const { postAnimals } = require('./animals')
+const { postUsers } = require('./users')
 
 const setup = (router) => {
     router.get('/ping', ping)
     
-    router.post('/animals', postAnimals)
+    router.post('/users', postUsers)
 }
 
 module.exports = { setup }
