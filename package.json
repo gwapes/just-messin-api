@@ -7,7 +7,7 @@
     "test": "jest test",
     "start": "node -r dotenv/config src/app.js"
   },
-  "author": "Adam Defoe",
+  "author": "gwapes",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1"
