@@ -1,17 +1,7 @@
-const common = require('./common')
 
-const validate = (user) => {
-    let response = {
-        isValid: true,
-        messages: []
-    }
+const common = require('../common')
 
-    validateUsername(user.username, response)
-
-    return response
-}
-
-const validateUsername = (username, response) => {
+const validate = (username, response) => {
     //TODO check that username is unique
 
     if(!username){

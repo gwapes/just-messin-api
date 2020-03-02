@@ -1,16 +1,15 @@
-describe('user validator tests', () => {
-    let validator
-    
+describe('username validator tests', () => {
     beforeEach(() => {
-        validator = require('../../src/validators/user')
+        validator = require('../../../src/validators/user/username')
     })
 
-    it('should successfully validate the user', () => {
-        const user = {
-            username: 'gwapes'
+    it('should successfully valdiate the username', () => {
+        const actual = {
+            isValid: true,
+            messages: []
         }
 
-        const actual = validator.validate(user)
+        validator.validate('gwapes', actual)
 
         expect(actual.isValid).toEqual(true)
         expect(actual.messages).toStrictEqual([])
@@ -26,11 +25,12 @@ describe('user validator tests', () => {
             ['ThereAreTooManyCharactersInMyUsernameProbably', ['Username must be between 5 and 25 characters in length.']]
         ]
     )('should return username: %s as invalid with correct message', (username, expectedMessages) => {
-        const user = {
-            username: username
+        const actual = {
+            isValid: true,
+            messages: []
         }
 
-        const actual = validator.validate(user)
+        validator.validate(username, actual)
 
         expect(actual.isValid).toEqual(false)
         expect(actual.messages).toStrictEqual(expectedMessages)
