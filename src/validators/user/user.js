@@ -1,4 +1,6 @@
 const username = require('./username')
+const email = require('./email')
+const password = require('./password')
 
 const validate = (user) => {
     let response = {
@@ -7,6 +9,8 @@ const validate = (user) => {
     }
 
     username.validate(user.username, response)
+    email.validate(user.email, response)
+    password.validate(user.password, response)
 
     return response
 }
