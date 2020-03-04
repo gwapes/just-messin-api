@@ -11,13 +11,14 @@ const postUsers = async (req, res) => {
             })
         } else {
             let result = await accountDB.saveUsers(req.body)
-            console.log(result)
+
             res.status(200)
             res.json(result)
         }
     }
     catch(ex) {
         console.error(ex)
+        
         res.status(500)
         res.json({ errors: [ 'Some technical issue occurred during processing.' ]})
     }
