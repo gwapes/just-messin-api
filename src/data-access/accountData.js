@@ -1,4 +1,4 @@
-const { MongoClient, ObjectID } = require('mongodb')
+const { MongoClient } = require('mongodb')
 
 const saveUsers = async (user) => {
     const client = new MongoClient(`${process.env.ACCOUNT_DB_URL}`, { useUnifiedTopology: true })
