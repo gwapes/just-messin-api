@@ -2,6 +2,7 @@ describe('users route tests', () => {
     let res
     let users
     let v
+    let db
     let actual
 
     beforeEach(() => {
@@ -11,9 +12,13 @@ describe('users route tests', () => {
         jest.mock('../../src/validators/user/user', () => ({
             validate: jest.fn().mockName('v.validate')
         }))
+        jest.mock('../../src/data-access/accountData', () => ({
+            saveUser: jest.fn().mockName('db.saveUser')
+        }))
 
         users = require('../../src/routes/users')
         v = require('../../src/validators/user/user')
+        db = require('../../src/data-access/accountData')
 
         actual = {}
         res = {
@@ -22,7 +27,7 @@ describe('users route tests', () => {
         }
     })
 
-    it('should respond with 200 and body of request', () => {
+    it('should respond with 200 and body of request', async () => {
         let req = {
             body: {
                 message: 'HUZZAH!'
@@ -32,14 +37,17 @@ describe('users route tests', () => {
             isValid: true,
             messages: []
         })
+        db.saveUser.mockResolvedValue({
+            message: 'HUZZAH!'
+        })
 
-        users.postUsers(req, res)
+        await users.postUser(req, res)
 
         expect(actual.status).toEqual(200)
         expect(actual.body).toStrictEqual({ message: 'HUZZAH!' })
     })
 
-    it('should respond with 400 and validation messages', () => {
+    it('should respond with 400 and validation messages', async () => {
         let req = {}
         v.validate.mockReturnValue({
             isValid: false,
@@ -49,13 +57,35 @@ describe('users route tests', () => {
             ]
         })
 
-        users.postUsers(req, res)
+        await users.postUser(req, res)
 
         expect(actual.status).toEqual(400)
         expect(actual.body).toStrictEqual({
             errors: [
                 'There is probably a problem with the request',
                 'You should check it out'
+            ]
+        })
+    })
+
+    it('should respond with 500 and generic error message', async () => {
+        let req = {
+            body: {
+                message: 'HUZZAH!'
+            }
+        }
+        v.validate.mockReturnValue({
+            isValid: true,
+            messages: []
+        })
+        db.saveUser.mockRejectedValue({ ex: 'log this...'})
+
+        await users.postUser(req, res)
+
+        expect(actual.status).toEqual(500)
+        expect(actual.body).toStrictEqual({
+            errors: [
+                'Some technical issue occurred during processing.'
             ]
         })
     })
