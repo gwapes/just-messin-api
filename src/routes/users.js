@@ -1,7 +1,7 @@
 const requestValidator = require('../validators/user/user')
 const accountDB = require('../data-access/accountData')
 
-const postUsers = async (req, res) => {
+const postUser = async (req, res) => {
     try {
         const validation = requestValidator.validate(req.body)
         if (!validation.isValid) {
@@ -10,7 +10,7 @@ const postUsers = async (req, res) => {
                 errors: validation.messages
             })
         } else {
-            let result = await accountDB.saveUsers(req.body)
+            let result = await accountDB.saveUser(req.body)
 
             res.status(200)
             res.json(result)
@@ -18,10 +18,10 @@ const postUsers = async (req, res) => {
     }
     catch(ex) {
         console.error(ex)
-        
+
         res.status(500)
         res.json({ errors: [ 'Some technical issue occurred during processing.' ]})
     }
 }
 
-module.exports = { postUsers }
+module.exports = { postUser }

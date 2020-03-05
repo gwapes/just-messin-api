@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb')
 
-const saveUsers = async (user) => {
+const saveUser = async (user) => {
     const client = new MongoClient(`${process.env.ACCOUNT_DB_URL}`, { useUnifiedTopology: true })
     try{
         await client.connect()
@@ -17,4 +17,4 @@ const saveUsers = async (user) => {
     return result.ops[0]
 }
 
-module.exports = { saveUsers }
+module.exports = { saveUser }
