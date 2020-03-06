@@ -1,5 +1,7 @@
 const requestValidator = require('../validators/user/user')
 const accountDB = require('../data-access/accountData')
+const reqMapper = require('../mappers/users/postRequest')
+const resMapper = require('../mappers/users/postResponse')
 
 const postUser = async (req, res) => {
     try {
@@ -10,10 +12,12 @@ const postUser = async (req, res) => {
                 errors: validation.messages
             })
         } else {
-            let result = await accountDB.saveUser(req.body)
+            let mappedReq = reqMapper.map(req.body)
+            let result = await accountDB.saveUser(mappedReq)
+            let response = resMapper.map(result)
 
             res.status(200)
-            res.json(result)
+            res.json(response)
         }
     }
     catch(ex) {

@@ -3,6 +3,8 @@ describe('users route tests', () => {
     let users
     let v
     let db
+    let reqm
+    let resm
     let actual
 
     beforeEach(() => {
@@ -15,10 +17,18 @@ describe('users route tests', () => {
         jest.mock('../../src/data-access/accountData', () => ({
             saveUser: jest.fn().mockName('db.saveUser')
         }))
+        jest.mock('../../src/mappers/users/postResponse', () => ({
+            map: jest.fn().mockName('resm.map')
+        }))
+        jest.mock('../../src/mappers/users/postRequest', () => ({
+            map: jest.fn().mockName('reqm.map')
+        }))
 
         users = require('../../src/routes/users')
         v = require('../../src/validators/user/user')
         db = require('../../src/data-access/accountData')
+        resm = require('../../src/mappers/users/postResponse')
+        reqm = require('../../src/mappers/users/postRequest')
 
         actual = {}
         res = {
@@ -40,6 +50,8 @@ describe('users route tests', () => {
         db.saveUser.mockResolvedValue({
             message: 'HUZZAH!'
         })
+        reqm.map.mockReturnValue({})
+        resm.map.mockReturnValue({ message: 'HUZZAH!' })
 
         await users.postUser(req, res)
 
@@ -79,6 +91,7 @@ describe('users route tests', () => {
             messages: []
         })
         db.saveUser.mockRejectedValue({ ex: 'log this...'})
+        reqm.map.mockReturnValue({})
 
         await users.postUser(req, res)
 
