@@ -1,4 +1,4 @@
-const passwordEncryptor = require('../../encryptors/password')
+const passwordEncryptor = require('../../encryptors/user-data')
 
 const map = (request) => {
     let mapped = { ...request }

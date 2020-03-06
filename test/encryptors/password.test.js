@@ -18,7 +18,7 @@ describe('password encryptor tests', () => {
             readFileSync: jest.fn().mockName('f.readFileSync')
         }))
 
-        encryptor = require('../../src/encryptors/password')
+        encryptor = require('../../src/encryptors/user-data')
         c = require('crypto')
         p = require('path')
         f = require('fs')

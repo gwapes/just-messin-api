@@ -6,12 +6,12 @@ describe('users post request mapper tests', () => {
         jest.resetModules()
         jest.resetAllMocks()
 
-        jest.mock('../../../src/encryptors/password', () => ({
+        jest.mock('../../../src/encryptors/user-data', () => ({
             encrypt: jest.fn().mockName('e.encrypt')
         }))
 
         mapper = require('../../../src/mappers/users/post-request')
-        e = require('../../../src/encryptors/password')
+        e = require('../../../src/encryptors/user-data')
     })
 
     it('should return request object with encrypted password back', () => {
