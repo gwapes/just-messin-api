@@ -2,7 +2,7 @@ describe('users post response mapper tests', () => {
     let mapper
 
     beforeEach(() => {
-        mapper = require('../../../src/mappers/users/postResponse')
+        mapper = require('../../../src/mappers/users/post-response')
     })
 
     it('should return the response without the password', () => {

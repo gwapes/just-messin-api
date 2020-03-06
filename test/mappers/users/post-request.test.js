@@ -1,5 +1,5 @@
 describe('users post request mapper tests', () => {
-    let maopper
+    let mapper
     let e
 
     beforeEach(() => {
@@ -10,7 +10,7 @@ describe('users post request mapper tests', () => {
             encrypt: jest.fn().mockName('e.encrypt')
         }))
 
-        mapper = require('../../../src/mappers/users/postRequest')
+        mapper = require('../../../src/mappers/users/post-request')
         e = require('../../../src/encryptors/password')
     })
 

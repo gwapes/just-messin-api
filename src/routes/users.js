@@ -1,7 +1,7 @@
 const requestValidator = require('../validators/user/user')
-const accountDB = require('../data-access/accountData')
-const reqMapper = require('../mappers/users/postRequest')
-const resMapper = require('../mappers/users/postResponse')
+const accountDB = require('../data-access/account-data')
+const reqMapper = require('../mappers/users/post-request')
+const resMapper = require('../mappers/users/post-response')
 
 const postUser = async (req, res) => {
     try {

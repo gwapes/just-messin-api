@@ -14,21 +14,21 @@ describe('users route tests', () => {
         jest.mock('../../src/validators/user/user', () => ({
             validate: jest.fn().mockName('v.validate')
         }))
-        jest.mock('../../src/data-access/accountData', () => ({
+        jest.mock('../../src/data-access/account-data', () => ({
             saveUser: jest.fn().mockName('db.saveUser')
         }))
-        jest.mock('../../src/mappers/users/postResponse', () => ({
+        jest.mock('../../src/mappers/users/post-response', () => ({
             map: jest.fn().mockName('resm.map')
         }))
-        jest.mock('../../src/mappers/users/postRequest', () => ({
+        jest.mock('../../src/mappers/users/post-request', () => ({
             map: jest.fn().mockName('reqm.map')
         }))
 
         users = require('../../src/routes/users')
         v = require('../../src/validators/user/user')
-        db = require('../../src/data-access/accountData')
-        resm = require('../../src/mappers/users/postResponse')
-        reqm = require('../../src/mappers/users/postRequest')
+        db = require('../../src/data-access/account-data')
+        resm = require('../../src/mappers/users/post-response')
+        reqm = require('../../src/mappers/users/post-request')
 
         actual = {}
         res = {
