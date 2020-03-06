@@ -26,7 +26,7 @@ describe('password encryptor tests', () => {
 
     it('should return the encoded encrypted string result', () => {
         p.resolve.mockReturnValue('blah/blah/blah.file')
-        f.readFileSync.mockReturnValue('this-is-the-master-public-key')
+        f.readFileSync.mockReturnValue('this-is-the-master-key')
         c.publicEncrypt.mockImplementation(() => Buffer.from('lol'))
 
         let actual = encryptor.encrypt('string-to-encrypt')

@@ -1,9 +1,10 @@
-const passwordEncryptor = require('../../encryptors/user-data')
+const encryptor = require('../../encryptors/user-data')
 
 const map = (request) => {
     let mapped = { ...request }
     
-    mapped.password = passwordEncryptor.encrypt(request.password)
+    mapped.password = encryptor.encrypt(request.password)
+    mapped.email = encryptor.encrypt(request.email)
 
     return mapped
 }

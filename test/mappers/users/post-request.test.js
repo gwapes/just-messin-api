@@ -23,9 +23,10 @@ describe('users post request mapper tests', () => {
         let expected = {
             username: 'user',
             password: 'HABBAJABBAFAKEENCRYPTEDVALUE',
-            email: 'email'
+            email: 'ADHSDHASDHASHDASHDASHDASHD'
         }
-        e.encrypt.mockReturnValue('HABBAJABBAFAKEENCRYPTEDVALUE')
+        e.encrypt.mockReturnValueOnce('HABBAJABBAFAKEENCRYPTEDVALUE')
+        e.encrypt.mockReturnValueOnce('ADHSDHASDHASHDASHDASHDASHD')
 
         let actual = mapper.map(request)
 
