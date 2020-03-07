@@ -3,14 +3,38 @@ const path = require('path')
 const fs = require('fs')
 
 const encrypt = (value) => {
-    let keyPath = path.resolve('./public-key.pem')
-    let key = fs.readFileSync(keyPath, 'utf8')
+    let key = getKeyValue('./users.key')
+    let iv = getKeyValue('./users.iv')
 
-    let buffer = Buffer.from(value)
+    let cipher = crypto.createCipher('aes-256-cbc', key, iv)
+    let encrypted = cipher.update(value)
+    encrypted = encrypted += cipher.final('hex')
 
-    let encrypted = crypto.publicEncrypt(key, buffer)
-
-    return encrypted.toString('base64')
+    return encrypted
 }
 
-module.exports = { encrypt }
+const hash = (password) => {
+    let salt = getSalt()
+
+    var hash = crypto.createHmac('sha512', salt)
+    hash.update(password)
+    let value = hash.digest('hex')
+
+    return {
+        salt: salt,
+        hash: value
+    }
+}
+
+const getKeyValue = (file) => {
+    let keyPath = path.resolve(`./${file}`)
+    let key = fs.readFileSync(keyPath, 'utf8')
+    return key
+}
+
+const getSalt = () => {
+    let salt = crypto.randomBytes(8).toString('hex').slice(0,16)
+    return salt
+}
+
+module.exports = { encrypt, hash }

@@ -12,8 +12,6 @@ const postUser = async (req, res) => {
                 errors: validation.messages
             })
         } else {
-            //TODO encrypt email address as well
-            //TODO use salted AES-256 encryption over RSA
             let mappedReq = reqMapper.map(req.body)
             let result = await accountDB.saveUser(mappedReq)
             let response = resMapper.map(result)

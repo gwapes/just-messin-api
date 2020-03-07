@@ -7,7 +7,8 @@ describe('users post request mapper tests', () => {
         jest.resetAllMocks()
 
         jest.mock('../../../src/encryptors/user-data', () => ({
-            encrypt: jest.fn().mockName('e.encrypt')
+            encrypt: jest.fn().mockName('e.encrypt'),
+            hash: jest.fn().mockName('e.hash')
         }))
 
         mapper = require('../../../src/mappers/users/post-request')
@@ -22,11 +23,17 @@ describe('users post request mapper tests', () => {
         }
         let expected = {
             username: 'user',
-            password: 'HABBAJABBAFAKEENCRYPTEDVALUE',
+            password: {
+                hash: 'HABBAJABBAFAKEENCRYPTEDVALUE',
+                salt: 'salted'
+            },
             email: 'ADHSDHASDHASHDASHDASHDASHD'
         }
-        e.encrypt.mockReturnValueOnce('HABBAJABBAFAKEENCRYPTEDVALUE')
-        e.encrypt.mockReturnValueOnce('ADHSDHASDHASHDASHDASHDASHD')
+        e.encrypt.mockReturnValue('ADHSDHASDHASHDASHDASHDASHD')
+        e.hash.mockReturnValue({ 
+            hash: 'HABBAJABBAFAKEENCRYPTEDVALUE',
+            salt: 'salted'
+        })
 
         let actual = mapper.map(request)
 
@@ -39,7 +46,11 @@ describe('users post request mapper tests', () => {
             password: 'pass',
             email: 'email'
         }
-        e.encrypt.mockReturnValue('HABBAJABBAFAKEENCRYPTEDVALUE')
+        e.encrypt.mockReturnValue({ 
+            hash: 'HABBAJABBAFAKEENCRYPTEDVALUE',
+            salt: 'salted'
+        })
+        e.hash.mockReturnValue('ADHSDHASDHASHDASHDASHDASHD')
 
         let actual = mapper.map(request)
 

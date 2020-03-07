@@ -107,3 +107,5 @@ dist
 # sensitive keyfiles
 *.pem
 *.pub
+*.key
+*.iv
