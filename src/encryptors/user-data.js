@@ -1,10 +1,9 @@
 const crypto = require('crypto')
-const path = require('path')
-const fs = require('fs')
+const fileAccess = require('../common/file-access')
 
 const encrypt = (value) => {
-    let key = getKeyValue('./users.key')
-    let iv = getKeyValue('./users.iv')
+    let key = fileAccess.retrieveFileData('./users.key')
+    let iv = fileAccess.retrieveFileData('./users.iv')
 
     let cipher = crypto.createCipher('aes-256-cbc', key, iv)
     let encrypted = cipher.update(value)
@@ -24,12 +23,6 @@ const hash = (password) => {
         salt: salt,
         hash: value
     }
-}
-
-const getKeyValue = (file) => {
-    let keyPath = path.resolve(`./${file}`)
-    let key = fs.readFileSync(keyPath, 'utf8')
-    return key
 }
 
 const getSalt = () => {
