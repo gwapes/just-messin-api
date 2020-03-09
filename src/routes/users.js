@@ -5,7 +5,7 @@ const resMapper = require('../mappers/users/post-response')
 
 const postUser = async (req, res) => {
     try {
-        const validation = requestValidator.validate(req.body)
+        const validation = await requestValidator.validate(req.body)
         if (!validation.isValid) {
             res.status(400)
             res.json({

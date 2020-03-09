@@ -1,4 +1,3 @@
-
 const common = require('../common')
 
 const validate = (username, response) => {
@@ -7,8 +6,6 @@ const validate = (username, response) => {
         response.messages.push('A username must be supplied at account creation.')
         return // we dont want to continue validating if there is no username
     }
-
-    //TODO check that username is unique
 
     if(!common.isAlphaNumeric(username)){
         response.isValid = false
