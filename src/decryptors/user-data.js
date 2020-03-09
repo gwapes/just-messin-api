@@ -12,12 +12,4 @@ const decrypt = (encrypted) => {
     return decrypted.toString()
 }
 
-const hash = (entered, salt) => {
-    var hash = crypto.createHmac('sha512', salt)
-    hash.update(entered)
-    let result = hash.digest('hex')
-
-    return result
-}
-
-module.exports = { decrypt, hash }
+module.exports = { decrypt }

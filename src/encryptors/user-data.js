@@ -12,8 +12,8 @@ const encrypt = (value) => {
     return encrypted
 }
 
-const hash = (password) => {
-    let salt = getSalt()
+const hash = (password, existingSalt) => {
+    let salt = existingSalt ? existingSalt : getSalt()
 
     var hash = crypto.createHmac('sha512', salt)
     hash.update(password)
